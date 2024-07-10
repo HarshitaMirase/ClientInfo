@@ -1,0 +1,26 @@
+﻿@page
+@using System.Data.SqlClient
+@{
+    try
+    {
+        String Id = Request.Query["Id"];
+        String connectionstring = "Data Source=DESKTOP-T38PAMD;Initial Catalog=ClientInfo;Integrated Security=True;Encrypt=False";
+        using (SqlConnection connection = new SqlConnection(connectionstring))
+        {
+            connection.Open();
+            String sql = " DELETE FROM ClientInfo WHERE Id=@Id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@Id", Id);
+
+                command.ExecuteNonQuery();
+               
+            }
+        }
+    }
+    catch(Exception ex)
+    {
+        
+    }
+    Response.Redirect("/Clients/Index");
+}
